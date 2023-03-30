@@ -42,9 +42,23 @@
 					<div class="sl__item__contents__content">
 						<p>${detailDto.caption}</p>
 					</div>
-			
-			
-			
+
+					<div id="storyCommentList-${detailDto.imageId}">
+					    <c:forEach var="comment" items="${detailDto.commentDto}">
+					        <div class="sl__item__contents__comment" id="storyCommentItems-${comment.id}">
+					            <p><b>${comment.name} :</b> ${comment.content}</p>
+
+					            <c:if test="${principal.id eq comment.userId}">
+					                <button onclick="deleteComment(${comment.id}, ${comment.userId})"><i class="fas fa-times"></i></button>
+					            </c:if>
+					        </div>
+					    </c:forEach>
+					</div>
+
+					<div class="sl__item__input">
+					    <input type="text" placeholder="댓글 달기..." id="storyCommentInput-${detailDto.imageId}"/>
+					    <button type="button" onclick="addComment(${detailDto.imageId})">게시</button>
+					</div>
 				</div>
 			</div>
 
