@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="layout/header.jsp"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,13 +11,13 @@
     <title>채팅</title>
     <style>
         .chating{
-            background-color: #000;
+            background-color: #FF8C00;
             width: 500px;
             height: 500px;
             overflow: auto;
         }
         .chating p{
-            color: #fff;
+            color: #000;
             text-align: left;
         }
         #yourMsg{
@@ -73,6 +75,7 @@
 <body>
     <div id="container" class="container">
         <h1>채팅</h1>
+        <h2>Together Chatting</h2>
         <div id="chating" class="chating">
         </div>
 
@@ -89,7 +92,7 @@
             <table>
                 <tr>
                     <th>메시지</th>
-                    <th><input class="form-control form-control-sm" id="chatting" placeholder="보내실 메시지를 입력하세요."></th>
+                    <th><input class="form-control form-control-sm" id="chatting" placeholder="보낼 메시지를 입력하세요."></th>
                     <th><button class="btn btn-sm btn-warning" onclick="send()" id="sendBtn">보내기</button></th>
                 </tr>
             </table>
@@ -97,3 +100,4 @@
     </div>
 </body>
 </html>
+    <%@ include file="layout/footer.jsp" %>
