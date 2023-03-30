@@ -37,7 +37,7 @@
 						</button>
 					</div>
 			
-					<span class="like"><b id="LikeCount-${detailDto.imageId}">${detailDto.likeCount } </b>likes</span>
+					<span class="like"><b id="LikeCount-${detailDto.imageId}">${detailDto.likeCount}</b>likes</span>
 			
 					<div class="sl__item__contents__content">
 						<p>${detailDto.caption}</p>
@@ -51,4 +51,4 @@
 		</article>
 	</section>
 </main>
-<script src="/js/profile.js"></script>
+<script src="/js/story.js"></script>
