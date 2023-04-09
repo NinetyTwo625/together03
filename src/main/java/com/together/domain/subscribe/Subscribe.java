@@ -11,38 +11,34 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Entity
-@Table(
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(	//데이터베이스에서 두 개의 컬럼에 대해 unique 제약조건 설정
         uniqueConstraints = {
                 @UniqueConstraint(
-                        name="subscribe_uk",
-                        columnNames = {"fromUserId", "toUserId"}
+                        name = "subscribe_uk",
+                        columnNames = {"from_user_id", "to_user_id"}
                 )
         }
 )
+@Entity
 public class Subscribe {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @JoinColumn(name = "fromUserId")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User fromUser;
-
-    @JoinColumn(name = "toUserId")
     @ManyToOne
-    private User toUser;
+    private User from_user;
 
-    private LocalDateTime createDate;
+    @ManyToOne
+    private User to_user;
+
+    private LocalDateTime create_date;
 
     @PrePersist
     public void createDate() {
-        this.createDate = LocalDateTime.now();
+        create_date = LocalDateTime.now();
     }
-
 }

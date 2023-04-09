@@ -19,44 +19,45 @@ public class SubscribeService {
     private final SubscribeRepository subscribeRepository;
     private final EntityManager em;
 
+    /* 구독하기 */
     @Transactional
-    public List<SubscribeDto> 구독리스트(int principalId, int pageUserId) {
+    public void subs(Long fromUserId, Long toUserId) {
+        try {
+            subscribeRepository.subscribe(fromUserId, toUserId);
+        } catch(Exception e) {
+            throw new CustomApiException("구독하기 오류: 이미 구독한 상태입니다.");
+        }
+    }
 
+    /* 구독취소 */
+    @Transactional
+    public void unSubs(Long fromUserId, Long toUserId) {
+        subscribeRepository.unSubscribe(fromUserId, toUserId);
+    }
+
+    /* 구독목록 */
+    @Transactional(readOnly = true)
+    public List<SubscribeDto> subscribeList(Long principalId, Long pageUserId) {
+
+        //쿼리 준비
         StringBuffer sb = new StringBuffer();
-        sb.append("SELECT u.id, u.username, u.profileImageUrl, ");
-        sb.append("if ((SELECT 1 FROM subscribe WHERE fromUserId = ? AND toUserId = u.id), 1, 0) subscribeState, ");
-        sb.append("if ((?=u.id), 1, 0) equalUserState ");
+        sb.append("SELECT u.id, u.username, u.profile_image_url, ");
+        sb.append("if ((SELECT 1 FROM subscribe WHERE from_user_id = ? AND to_user_id = u.id), 1, 0) subscribe_state, ");
+        sb.append("if ((? = u.id), 1, 0) equal_user_state ");
         sb.append("FROM user u INNER JOIN subscribe s ");
-        sb.append("ON u.id = s.toUserId ");
-        sb.append("WHERE s.fromUserId = ?"); // 세미콜론 첨부하면 안됨
+        sb.append("ON u.id = s.to_user_id ");
+        sb.append("WHERE s.from_user_id = ?");
 
-        // 1.물음표 principalId
-        // 2.물음표 principalId
-        // 3.물음표 pageUserId
+        //쿼리 완성
         Query query = em.createNativeQuery(sb.toString())
                 .setParameter(1, principalId)
                 .setParameter(2, principalId)
                 .setParameter(3, pageUserId);
 
-        JpaResultMapper result = new JpaResultMapper();
-        List<SubscribeDto> subscribeDtos = result.list(query, SubscribeDto.class);
+        //쿼리 실행
+        JpaResultMapper resultMapper = new JpaResultMapper();
+        List<SubscribeDto> list = resultMapper.list(query, SubscribeDto.class);
 
-        return subscribeDtos;
+        return list;
     }
-
-    @Transactional
-    public void 구독하기(int fromUserId, int toUserId) {
-        try {
-            subscribeRepository.mSubscribe(fromUserId, toUserId);
-        } catch (Exception e) {
-            throw new CustomApiException("이미 구독을 하였습니다.");
-        }
-    }
-
-    @Transactional
-    public void 구독취소하기(int fromUserId, int toUserId) {
-        subscribeRepository.mUnSubscribe(fromUserId, toUserId);
-    }
-
-
 }

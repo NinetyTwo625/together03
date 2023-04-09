@@ -17,17 +17,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
+    /* 댓글 작성 */
     @Transactional
-    public Comment 댓글쓰기(String content, int imageId, int userId) {
-
-        // Tip (객체를 만들 때 id값만 담아서 insert 할 수 있다)
-        // 대신 return 시에 image객체와 user객체는 id값만 가지고 있는 빈 객체를 리턴받는다.
+    public Comment writeComment(String content, Long imageId, Long userId) {
         Image image = new Image();
         image.setId(imageId);
 
-        User userEntity = userRepository.findById(userId).orElseThrow(()->{
-            // throw -> return 으로 변경
-            return new CustomApiException("유저 아이디를 찾을 수 없습니다.");
+        User userEntity = userRepository.findById(userId).orElseThrow(() -> {
+            return new CustomApiException("찾을 수 없는 사용자입니다.");
         });
 
         Comment comment = new Comment();
@@ -38,11 +35,12 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    /* 댓글 삭제 */
     @Transactional
-    public void 댓글삭제(int id) {
+    public void deleteComment(Long commentId) {
         try {
-            commentRepository.deleteById(id);
-        } catch (Exception e) {
+            commentRepository.deleteById(commentId);
+        } catch(Exception e) {
             throw new CustomApiException(e.getMessage());
         }
     }

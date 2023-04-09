@@ -21,7 +21,7 @@
                 <article class="login__form__container">
                    <!--로그인 폼-->
                    <div class="login__form">
-                        <h1><img src="/images/logo.png" alt=""></h1>
+                        <h1><img src="/images/logo.jpg" alt=""></h1>
 
                         <!--로그인 인풋-->
                         <form class="login__input"  action="/auth/signin" method="POST">
@@ -46,7 +46,22 @@
                                 <span>Facebook으로 로그인</span>
                             </button>
                         </div>
+
+                        <div class="login__google">
+                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
+                                <i class="fab fa-google "></i>
+                                <span>google 계정으로 로그인</span>
+                            </button>
+                        </div>
+
                         <!-- Oauth 소셜로그인end -->
+
+                        <div align="center">
+                        	<c:if test="${error}">
+                        		<p class="exception">${exception}</p>
+                        	</c:if>
+                        </div>
+
                     </div>
 
                     <!--계정이 없으신가요?-->

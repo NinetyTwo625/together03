@@ -1,35 +1,155 @@
 @import "header.css";
 
-/*메인*/
-.main {
-  padding-top: 54px;
+/* 검색 결과 리스트 */
+.search-list {
+	align-self: center;
 }
 
-/*컨테이너*/
-.main .container {
-  padding-top: 30px;
-  width: 935px;
-  display: flex;
-  margin: 0 auto;
+/* 검색 결과 요약 */
+.search-summary {
+	padding-top: 40px;
+	padding-bottom: 60px;
 }
 
-/*게시물리스트*/
-.main .container .story-list {
+/* 검색 타이틀 */
+.search-title {
+	font-size: 35px;
+	padding-bottom: 10px;
+}
+
+/* 검색 수 */
+.search-count {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+/* 검색 사용자 프로필 이미지 */
+.search-profile-img {
+	width: 64px;
+	height: 64px;
+	border-radius: 70%;
+	border: 1px solid #DCDCDC;
+}
+
+.search-profile {
+	display: table;
+	height: 64px;
+	padding-left: 10px;
+}
+
+.search-profile-item {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+/* 검색 사용자 소개글 */
+.search-profile-content {
+	color: gray;
+	font-size: 12px;
+	padding-top: 4px;
+}
+
+/*tab css*/
+body, div, ul, li {
+	margin: 0;
+	padding: 0;
+}
+
+ul, li {
+	list-style: none;
+}
+
+.tab {
+	border: none;
+	width: 975px;
+}
+
+.tabnav {
+	font-size: 0;
+	width: 181px;
+	margin: auto;
+}
+
+.tabnav li {
+	display: inline-block;
+	height: 46px;
+	text-align: center;
+}
+
+.tabnav li a:before {
+	content: "";
+	position: absolute;
+	left: 0;
+	top: 0px;
+	width: 100%;
+	height: 3px;
+}
+
+.tabnav li a.active:before {
+	background: #0095f6;
+}
+
+.tabnav li a.active {
+	border-bottom: 1px solid #fff;
+}
+
+.tabnav li a {
+	position: relative;
+	display: block;
+	background: #fafafa;
+	color: #000;
+	padding: 0 30px;
+	line-height: 46px;
+	text-decoration: none;
+	font-size: 16px;
+}
+
+.tabnav li a:hover, .tabnav li a.active {
+	background: #fff;
+	color: #0095f6;
+}
+
+.tabcontent {
+	padding: 20px;
+	height: 244px;
+}
+
+/* 모달 */
+.modal{
+overflow-y: initial !important
+}
+.modal .story-list__item{
+height: 700px;
+overflow-y: auto;
+}
+
+.modal-search {
+  position: fixed;
+  top: 25px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-search .modal {
+  background-color: #fff;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
-  width: 700px;
-  margin-bottom: 30px;
 }
 
 /*게시물 리스트 아이템*/
-.main .container .story-list .story-list__item {
+.modal-search .modal .story-list__item {
   border: 1px solid #dbdbdb;
   border-radius: 4px;
   width: 100%;
 }
 
 /*리스트 아이템 헤더부분*/
-.main .container .story-list .story-list__item .sl__item__header {
+.modal-search .modal .story-list__item .sl__item__header {
   width: 100%;
   height: 60px;
   display: flex;
@@ -38,14 +158,13 @@
 }
 
 /*리스트 아이템 헤더 div*/
-.main .container .story-list .story-list__item .sl__item__header div {
+.modal-search .modal .story-list__item .sl__item__header div {
   margin-left: 10px;
 }
 
 /*리스트 아이템 헤더 이미지영역 박스*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__header
   div:nth-child(1) {
@@ -57,9 +176,8 @@
 }
 
 /*리스트 아이템 헤더 실제이미지*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__header
   div:nth-child(1)
@@ -70,28 +188,28 @@
 }
 
 /* 게시물 이미지 박스*/
-.main .container .story-list .story-list__item .sl__item__img {
-  height: 600px;
+.modal-search .modal .story-list__item .sl__item__img {
+  width: 650px;
+  height: 650px;
   min-height: 300px;
 }
 
 /* 게시물 이미지*/
-.main .container .story-list .story-list__item .sl__item__img img {
+.modal-search .modal .story-list__item .sl__item__img img {
   width: 100%;
   height: 100%;
 }
 
 /* 게시물 이미지 밑에 영역들 */
-.main .container .story-list .story-list__item .sl__item__contents {
+.modal-search .modal .story-list__item .sl__item__contents {
   display: flex;
   flex-direction: column;
   background: #fff;
 }
 
 /*좋아요 버튼영역*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
   .sl__item__contents__icon {
@@ -100,9 +218,8 @@
 }
 
 /*좋아요 실제 버튼*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
   .sl__item__contents__icon
@@ -116,9 +233,8 @@
 }
 
 /*게시물 내용*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
   .sl__item__contents__content {
@@ -126,9 +242,8 @@
 }
 
 /*게시물 like 갯수스타일*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents .like{
 	background-color: transparent;
@@ -139,9 +254,8 @@
 	text-indent: 15px;
 }
 /*게시물 좋아요 count값 */
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
 .sl__item__contents .like b{
 	margin-right: 5px;
@@ -160,16 +274,15 @@
   font-weight: bold;
   color: #2471A3;
   padding: 0 5px 0 0;
-  cursor: pointer;
 }
 
 /*코멘트 = 댓글 */
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
-  .sl__item__contents__comment {
+  .sl__item__contents__comment
+  {
   display:flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -180,34 +293,29 @@
   margin-bottom: 5px;
 }
 
-.story__comment__list {
-	max-height: 92px;
-	overflow: auto;
-}
-
 /*댓글 삭제버튼*/
-.main
-  .container
-  .story-list
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
 .sl__item__contents__comment button{ border: none; outline: none; background: #fff; cursor: pointer;}
 
 /* 댓글 입력창*/
-.main .container .story-list .story-list__item .sl__item__input {
+.modal-search .modal .story-list__item .sl__item__input {
   display: flex;
   border-top: 1px solid #dbdbdb;
 }
 
 /*입력 인풋*/
-.main .container .story-list .story-list__item .sl__item__input input {
+.modal-search .modal .story-list__item .sl__item__input input {
   flex: 9;
   height: 56px;
   border: 0;
   padding-left: 15px;
 }
+
 /* 입력하기 버튼 */
-.main .container .story-list .story-list__item .sl__item__input button {
+.modal-search .modal .story-list__item .sl__item__input button {
   flex: 1;
   height: 56px;
   border: 0;
@@ -217,107 +325,13 @@
   font-size: 14px;
 }
 
-/* Event */
-.main
-  .container
-  .story-list
+/* 좋아요 버튼 활성화시 */
+.modal-search
+  .modal
   .story-list__item
   .sl__item__contents
   .sl__item__contents__icon
   button:first-child
   .active {
   color: red;
-}
-
-.profile-image {
-  border: 2px solid #8a3ab8;
-}
-
-/* 상태창 */
-.story-status {
-  font-size: 13px;
-  margin-left: 20px;
-  top: 0;
-  height: 350px;
-  position: relative;
-}
-
-.story-status-others {
-  width: 300px;
-  height: 275px;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-.story-status-profile {
-  width: 300px;
-  height: 55px;
-}
-
-.story-status-others
-  img {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 2px solid #36B06A;
-}
-
-.story-profile
-  img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-
-hr {
-  border-top: 1px solid #dbdbdb;
-  margin: 10px 20px 10px 20px;
-}
-
-.story-status-name {
-  font-weight: bold;
-  margin-left: 10px;
-}
-
-.story-status-bio {
-  color: gray;
-  margin-left: 10px;
-}
-
-/* 알림창 */
-.notification-container {
-  width: 250px;
-  background: rgba(170,170,170,.3);
-  border: 1px solid rgba(150,150,150, .2);
-  border-radius: 5px 0 0 5px ;
-  padding: 15px 15px;
-  position: fixed;
-  right: -250px;
-  transition: transform 0.3s ease-in-out;
-}
-
-.notification-container
-  img {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 2px solid #8A2AB8;
-  margin-right: 5px;
-}
-
-.notification-container
-  td {
-  font-size: 13px;
-  font-weight: bold;
-}
-
-.notification-container.show {
-  transform: translateX(-249px);
-}
-
-.notification-container
-  .notification-time {
-  font-size: 13px;
-  font-weight: bold;
-  float: right;
 }

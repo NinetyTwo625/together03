@@ -9,21 +9,18 @@ import com.together.domain.user.User;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Service // 1.IoC 2.트랜잭션 관리
+@Service
 public class AuthService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    /* 사용자 회원가입 */
     @Transactional
-    public User 회원가입(User user) {
-        String rawPassword = user.getPassword();
-        String encPassword = bCryptPasswordEncoder.encode(rawPassword);
-
+    public void join(User user) {
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setRole("ROLE_USER");
-        user.setPassword(encPassword);
-        //회원가입 진행
-        User userEntity = userRepository.save(user);
-        return userEntity;
+
+        userRepository.save(user);
     }
 }

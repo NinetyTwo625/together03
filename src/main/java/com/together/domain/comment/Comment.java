@@ -11,32 +11,32 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class Comment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String content;
 
     @JsonIgnoreProperties({"images"})
-    @JoinColumn(name = "userId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
+    @ManyToOne
     private User user;
 
-    @JoinColumn(name = "imageId")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "image_id")
+    @ManyToOne
     private Image image;
 
-    private LocalDateTime createDate;
+    private LocalDateTime create_date;
 
-    @PrePersist
+    @PrePersist	//데이터베이스에 INSERT 되기 직전에 실행
     public void createDate() {
-        this.createDate = LocalDateTime.now();
+        this.create_date = LocalDateTime.now();
     }
 }

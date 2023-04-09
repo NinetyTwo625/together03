@@ -9,52 +9,51 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@Entity
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false, length = 100, unique = true)
+    @Column(nullable = false, length = 50, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String password;
-    @Column(nullable = false)
-    private String name;
-    private String website;
-    private String bio; //자기소개
+
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String name;
+
     private String phone;
+
     private String gender;
-    private String profileImageUrl;
-    private String provider; //제공자 구글,페북,네이버
-    private String role; //USER, ADMIN
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("user")
-    private List<Image> images;
+    private String website;	//사용자 웹사이트
 
-    private LocalDateTime createDate;
+    private String bio;	//사용자 자기소개
 
-    @PrePersist // DB에 insert 되기 직전에 실행, 나중에 DB에 값을 넣을 때 위에 값만 넣어주면 createDate는 자동으로 들어감.
+    private String profile_image_url;	//사용자 프로필 이미지 경로
+
+    private String role;
+
+    @JsonIgnoreProperties({"user"})
+    @OneToMany(mappedBy = "user")
+    private List<Image> images = new ArrayList<>();
+
+    private LocalDateTime create_date;
+
+    @PrePersist	//데이터베이스에 INSERT 되기 직전에 실행
     public void createDate() {
-        this.createDate = LocalDateTime.now();
-    }
-
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name + ", website="
-                + website + ", bio=" + bio + ", email=" + email + ", phone=" + phone + ", gender=" + gender
-                + ", profileImageUrl=" + profileImageUrl + ", role=" + role +", createDate="
-                + createDate + "]";
+        this.create_date = LocalDateTime.now();
     }
 }

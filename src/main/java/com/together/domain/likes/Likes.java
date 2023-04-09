@@ -11,36 +11,32 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Entity
-@Table (
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(	//데이터베이스에서 두 개의 컬럼에 대해 unique 제약조건 설정
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "likes_uk",
-                        columnNames = {"imageId", "userId"}
+                        columnNames = {"image_id", "user_id"}
                 )
         }
 )
+@Entity
 public class Likes {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
 
-    @JoinColumn(name = "imageId")
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @JsonIgnoreProperties({"images"})
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    private User user;
+
+    @JoinColumn(name = "image_id")
     @ManyToOne
     private Image image;
 
-    @JoinColumn(name = "userId")
-    @ManyToOne
-    @JsonIgnoreProperties({"images"})
-    private User user;
-    private LocalDateTime createDate;
-
-    @PrePersist
-    public void createDate() {
-        this.createDate = LocalDateTime.now();
-    }
+    private LocalDateTime create_date;
 }

@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp"%>
 
@@ -10,18 +9,21 @@
 
 		<!--유저이미지-->
 		<div class="profile-left">
-			<div class="profile-img-wrap story-border"
-				onclick="popup('.modal-image')">
-
-				<form id="userProfileImageForm">
-					<input type="file" name="profileImageFile" style="display: none;"
-						id="userProfileImageInput" />
-				</form>
-
-				<img class="profile-image" src="/upload/${dto.user.profileImageUrl}"
-					onerror="this.src='/images/person.png'" id="userProfileImage" />
-
-			</div>
+			<c:choose>
+				<c:when test="${dto.user.id eq principal.user.id}">
+					<div class="profile-img-wrap story-border" onclick="profilePopup('.modal-image')">
+						<form id="userProfileImageForm">
+							<input type="file" name="profileImageFile" style="display: none;" id="userProfileImageInput" />
+						</form>
+						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.jpeg'" id="userProfileImage" />
+					</div>
+				</c:when>
+				<c:otherwise>
+					<div class="profile-img-wrap story-border">
+						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.jpeg'" id="userProfileImage" />
+					</div>
+				</c:otherwise>
+			</c:choose>
 		</div>
 		<!--유저이미지end-->
 
@@ -43,13 +45,9 @@
 								<button class="cta" onclick="toggleSubscribe(${dto.user.id}, this)">구독하기</button>
 							</c:otherwise>
 						</c:choose>
-
-
 					</c:otherwise>
 				</c:choose>
-
-
-				<button class="modi" onclick="popup('.modal-info')">
+				<button class="modi" onclick="profilePopup('.modal-info')">
 					<i class="fas fa-cog"></i>
 				</button>
 			</div>
@@ -72,7 +70,7 @@
 	</div>
 </section>
 
-<!--게시물컨섹션-->
+<!--게시물 컬렉션-->
 <section id="tab-content">
 	<!--게시물컨컨테이너-->
 	<div class="profileContainer">
@@ -83,16 +81,16 @@
 
 				<!--아이템들-->
 
-				<c:forEach var="image" items="${dto.user.images}"> <!-- EL표현식에서 변수명을 적으면 get함수가 자동 호출된다. -->
-					<div class="img-box">
-                        <img src="/upload/${image.postImageUrl}">
-                        <div class="comment"
-                            <c:if test= "${principal.id eq profileDto.id }" > onclick="postPopup('.modal-post', ${image.id})" </c:if>
-                            onclick="location.href='/image/${image.id}'">
-                        </div>
-                    </div>
+				<c:forEach var="image" items="${dto.user.images}">
+					<div class="img-box" onclick="popup('#modal-search-${image.id}', '${image.hashtag}')">
+						<a href=""> <img src="/upload/${image.post_image_url}" />
+						</a>
+						<div class="comment">
+							<a href="#" class=""> <i class="fas fa-heart"></i><span>${image.likesCount}</span>
+							</a>
+						</div>
+					</div>
 				</c:forEach>
-
 
 				<!--아이템들end-->
 			</div>
@@ -103,9 +101,8 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-		<button onclick="location.href='/user/${dto.user.id}/update'">회원정보 변경</button>
+		<button onclick="location.href='/user/1/update'">회원정보 변경</button>
 		<button onclick="location.href='/logout'">로그아웃</button>
-		<button onclick="location.href='/user/${dto.user.id}/delete'">회원탈퇴</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
 </div>
@@ -115,7 +112,7 @@
 <div class="modal-image" onclick="modalImage()">
 	<div class="modal">
 		<p>프로필 사진 바꾸기</p>
-		<button onclick="profileImageUpload(${dto.user.id}, ${principal.user.id})">사진 업로드</button>
+		<button onclick="profileImageUpload(${principal.user.id})">사진 업로드</button>
 		<button onclick="closePopup('.modal-image')">취소</button>
 	</div>
 </div>
@@ -131,16 +128,18 @@
 			</button>
 		</div>
 
-		<div class="subscribe-list" id="subscribeModalList">
-
-
-
-		</div>
+		<div class="subscribe-list" id="subscribeModalList"></div>
 	</div>
 
 </div>
 
+<!-- 게시글 모달 -->
+<c:forEach var="image" items="${dto.user.images}">
+	<%@ include file="../modal.jsp"%>
+</c:forEach>
 
+<script src="/js/story.js"></script>
+<script src="/js/search.js"></script>
 <script src="/js/profile.js"></script>
 
 <%@ include file="../layout/footer.jsp"%>

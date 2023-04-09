@@ -3,7 +3,8 @@ package com.together.service;
 import com.together.config.auth.PrincipalDetails;
 import com.together.domain.image.Image;
 import com.together.domain.image.ImageRepository;
-import com.together.web.dto.ImageDetailDto;
+import com.together.domain.subscribe.SubscribeRepository;
+import com.together.web.NotificationController;
 import com.together.web.dto.ImageUploadDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,10 +12,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,57 +26,65 @@ import java.util.UUID;
 public class ImageService {
 
     private final ImageRepository imageRepository;
+    private final SubscribeRepository subscribeRepository;
 
-    @Transactional(readOnly = true)
-    public List<Image> 인기사진() {
-        return imageRepository.mPopular();
+    /* 이미지 업로드 폴더 */
+    @Value("${file.path}")
+    private String uploadFolder;
+
+    /* 검색 */
+    public List<Image> imageSearch(String keyword) {
+        return imageRepository.findByHashtagContaining(keyword);
     }
 
+    /* 이미지 업로드 */
+    @Transactional
+    public void upload(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
+        UUID uuid = UUID.randomUUID();
+        String imageFileName = uuid + "_" + imageUploadDto.getFile().getOriginalFilename();
+        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
+
+        try {
+            Files.write(imageFilePath, imageUploadDto.getFile().getBytes());
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+
+        Image image = imageUploadDto.toEntity(principalDetails.getUser(), imageFileName);
+        imageRepository.save(image);
+
+        /* 알림 부분 */
+        List<Long> subsToList = subscribeRepository.findSubscribeTo(principalDetails.getUser().getId());
+        for (Long id : subsToList) {
+            SseEmitter sseEmitter = NotificationController.sseEmitters.get(id);
+            try {
+                sseEmitter.send(SseEmitter.event().name("notification").data("새로운 글을 업로드했습니다!"));
+            } catch (Exception e) {
+                NotificationController.sseEmitters.remove(id);
+            }
+        }
+    }
+
+    /* 스토리 페이지 */
     @Transactional(readOnly = true)
-    public Page<Image> 이미지스토리(int principalId, Pageable pageable) {
-        Page<Image> images = imageRepository.mStory(principalId, pageable);
+    public Page<Image> story(Long principalId, Pageable pageable) {
+        Page<Image> images = imageRepository.story(principalId, pageable);
 
         images.forEach((image) -> {
-
-            image.setLikeCount(image.getLikes().size());
-
+            image.setLikesCount(image.getLikes().size());
             image.getLikes().forEach((like) -> {
-                if(like.getUser().getId() == principalId) {
-                    image.setLikeState(true);
-                }
+                if(like.getUser().getId() == principalId)
+                    image.setLikesState(true);
             });
+            image.setHashtagList(Arrays.asList(image.getHashtag().split(",")));
         });
 
         return images;
     }
 
-    @Value("${file.path}")
-    private String uploadFolder;
-
-    @Transactional
-    public void 사진업로드(ImageUploadDto imageUploadDto, PrincipalDetails principalDetails) {
-        UUID uuid = UUID.randomUUID();
-        String imageFileName = uuid + "_" + imageUploadDto.getFile().getOriginalFilename();
-        System.out.println("이미지 파일이름: " + imageFileName);
-
-        Path imageFilePath = Paths.get(uploadFolder + imageFileName);
-
-        try {
-            Files.write(imageFilePath, imageUploadDto.getFile().getBytes());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Image image = imageUploadDto.toEntity(imageFileName, principalDetails.getUser());
-        imageRepository.save(image);
-
-    }
-
-    @Transactional
-    public ImageDetailDto detailImage(int imageId, int principalId) {
-        Image image = imageRepository.imageDetail(imageId, principalId);
-        ImageDetailDto imageDetailDto = new ImageDetailDto(image);
-
-        return imageDetailDto;
+    /* 인기 페이지 */
+    @Transactional(readOnly = true)
+    public List<Image> popular() {
+        return imageRepository.popular();
     }
 }

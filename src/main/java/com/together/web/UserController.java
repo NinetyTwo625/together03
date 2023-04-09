@@ -25,41 +25,19 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/user/{pageUserid}")
-    public String profile(@PathVariable int pageUserid, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    /* 사용자 프로필 페이지 */
+    @GetMapping("/user/{pageUserId}")
+    public String profile(@PathVariable Long pageUserId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        UserProfileDto userProfileDto = userService.profile(pageUserId, principalDetails.getUser().getId());
+        model.addAttribute("dto", userProfileDto);
 
-        UserProfileDto dto = userService.회원프로필(pageUserid, principalDetails.getUser().getId());
-        model.addAttribute("dto", dto);
         return "user/profile";
     }
 
+    /* 회원정보 수정 페이지 */
     @GetMapping("/user/{id}/update")
-    public String update(@PathVariable int id, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-
-        System.out.println("세션 정보 : " + principalDetails.getUser());
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        PrincipalDetails mPrincipalDetails = (PrincipalDetails) auth.getPrincipal();
-//        System.out.println("직접 찾은 세션 정보: " + mPrincipalDetails.getUser());
+    public String update(@PathVariable Long id) {
         return "user/update";
     }
-
-    @GetMapping("user/{id}/delete")
-    public String delete(@PathVariable int id, Model model) {
-        model.addAttribute("Id", id);
-        return "user/delete-confirm";
-    }
-
-    @PostMapping("user/{id}/delete")
-    public String deleteUser(@PathVariable int id, @RequestParam String confirm, RedirectAttributes redirectAttributes) {
-        if ("yes".equalsIgnoreCase(confirm)) {
-            // 회원 탈퇴 처리
-            userService.deleteUserById(id);
-            redirectAttributes.addFlashAttribute("message", "회원 탈퇴가 완료되었습니다.");
-            return "redirect:/auth/signin";
-        }
-        return "redirect:/user/" + id + "/delete";
-    }
-
 }

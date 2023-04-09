@@ -6,23 +6,34 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
-public interface SubscribeRepository extends JpaRepository<Subscribe, Integer> {
+public interface SubscribeRepository extends JpaRepository<Subscribe, Long> {
+
+    /* 구독하기 */
+    @Modifying	//INSERT, DELETE, UPDATE를 native query로 작성하려면 해당 어노테이션이 필요
+    @Query(value = "INSERT INTO subscribe(from_user_id, to_user_id, create_date) VALUES(:from_user_id, :to_user_id, now())", nativeQuery = true)
+    void subscribe(Long from_user_id, Long to_user_id);
+
+    /* 구독취소 */
     @Modifying
-    @Query(value = "INSERT INTO subscribe(fromUserId, toUserId, createDate) VALUES(:fromUserId, :toUserId, now())", nativeQuery = true)
-    void mSubscribe(@Param("fromUserId") int fromUserId, @Param("toUserId") int toUserId);
+    @Query(value = "DELETE FROM subscribe WHERE from_user_id = :from_user_id AND to_user_id = :to_user_id", nativeQuery = true)
+    void unSubscribe(Long from_user_id, Long to_user_id);
 
-    @Modifying
-    @Query(value = "DELETE FROM subscribe WHERE fromUserId = :fromUserId AND toUserId = :toUserId", nativeQuery = true)
-    void mUnSubscribe(@Param("fromUserId") int fromUserId, @Param("toUserId") int toUserId);
+    /* 구독상태 */
+    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE from_user_id = :principal_id AND to_user_id = :page_user_id", nativeQuery = true)
+    int subscribeState(Long principal_id, Long page_user_id);
 
-    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE fromUserId = :principalId AND toUserId = :pageUserId", nativeQuery = true)
-    int mSubscribeState(@Param("principalId") int principalId, @Param("pageUserId") int pageUserId);
+    /* 구독개수 */
+    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE from_user_id = :page_user_id", nativeQuery = true)
+    int subscribeCount(Long page_user_id);
 
-    @Query(value = "SELECT COUNT(*) FROM subscribe WHERE fromUserId = :pageUserId", nativeQuery = true)
-    int mSubscribeCount(@Param("pageUserId") int pageUserId);
+    /* 내가 구독한 사용자 */
+    @Query(value = "SELECT to_user_id FROM subscribe WHERE from_user_id = :principal_id", nativeQuery = true)
+    List<Long> findSubscribeFrom(Long principal_id);
 
-    void deleteAllByFromUserId(int fromUserId);
-    void deleteAllByToUserId(int toUserId);
+    /* 나를 구독한 사용자 */
+    @Query(value = "SELECT from_user_id FROM subscribe WHERE to_user_id = :principal_id", nativeQuery = true)
+    List<Long> findSubscribeTo(Long principal_id);
 }

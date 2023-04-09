@@ -6,15 +6,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
 public class UserProfileDto {
-    private boolean pageOwnerState;
-    private int imageCount;
-    private User user;
 
-    private int subscribeCount;
+    private User user;
+    private boolean pageOwnerState;
     private boolean subscribeState;
+    private int imageCount;
+    private int subscribeCount;
 }
