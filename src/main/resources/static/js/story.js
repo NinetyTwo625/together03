@@ -203,7 +203,7 @@ function addComment(imageId) {
 			    </p>
 			    <button onclick="deleteComment(${resp.data.id})"><i class="fas fa-times"></i></button>
 			</div>`;
-		commentList.prepend(content);
+		commentList.append(content);
 	}).fail(error => {
 		console.log(error);
 	});

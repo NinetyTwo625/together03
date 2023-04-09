@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
@@ -46,8 +47,12 @@
 	<header class="header">
 		<div class="container">
 			<a href="/" class="logo">
-				<img src="/images/logo.jpg" alt="">
+				<img src="/images/logo.png" alt="">
 			</a>
+			<a href="/" class="logo2">
+				<img src="/images/logo2.png" alt="">
+			</a>
+
 			<form id="searchForm" action="/search" method="GET">
 				<input type="text" id="search" name="keyword" placeholder="검색">
 				<div class="relative-tab">
@@ -65,6 +70,7 @@
 					</div>
 				</div>
 			</form>
+
 			<nav class="navi">
 				<ul class="navi-list">
 					<li class="navi-item"><a href="/">

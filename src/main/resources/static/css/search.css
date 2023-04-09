@@ -86,7 +86,7 @@ ul, li {
 }
 
 .tabnav li a.active:before {
-	background: #0095f6;
+	background: #FFA500;
 }
 
 .tabnav li a.active {
@@ -106,7 +106,7 @@ ul, li {
 
 .tabnav li a:hover, .tabnav li a.active {
 	background: #fff;
-	color: #0095f6;
+	color: #FFA500;
 }
 
 .tabcontent {
@@ -272,7 +272,7 @@ overflow-y: auto;
 .sl__item__contents__tag{
   font-size: 15px;
   font-weight: bold;
-  color: #2471A3;
+  color: #FF8C00;
   padding: 0 5px 0 0;
 }
 
@@ -321,7 +321,7 @@ overflow-y: auto;
   border: 0;
   background-color: transparent;
   font-weight: 500;
-  color: #0095f6;
+  color: #FFA500;
   font-size: 14px;
 }
 

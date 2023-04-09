@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp"%>
 
@@ -15,12 +16,12 @@
 						<form id="userProfileImageForm">
 							<input type="file" name="profileImageFile" style="display: none;" id="userProfileImageInput" />
 						</form>
-						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.jpeg'" id="userProfileImage" />
+						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.png'" id="userProfileImage" />
 					</div>
 				</c:when>
 				<c:otherwise>
 					<div class="profile-img-wrap story-border">
-						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.jpeg'" id="userProfileImage" />
+						<img class="profile-image" src="/upload/${dto.user.profile_image_url}" onerror="this.src='/images/person.png'" id="userProfileImage" />
 					</div>
 				</c:otherwise>
 			</c:choose>

@@ -17,6 +17,6 @@ public class SubscribeDto {
     private BigInteger id;
     private String username;
     private String profile_image_url;
-    private Integer subscribe_state;
-    private Integer equal_user_state;
+    private BigInteger subscribeState;
+    private BigInteger equalUserState;
 }

@@ -36,6 +36,15 @@
 	width: 120px;
 }
 
+.logo2 {
+  display: flex;
+  margin-right: auto;
+}
+
+.logo2 img {
+  width: 75px;
+}
+
 .navi>.navi-list {
 	display: flex;
 }
@@ -136,7 +145,7 @@
 
 .relative-tabnav li a:hover, .relative-tabnav li a.active {
 	background: #fff;
-	color: #0095f6;
+	color: #FFA500;
 }
 
 .relative-keyword-image {

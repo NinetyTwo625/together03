@@ -20,7 +20,7 @@
 
 						<c:forEach var="user" items="${users}">
 							<div class="flex" style="width: 400px;">
-								<img class="search-profile-img" src="/upload/${user.profile_image_url}" onerror="this.src='/images/person.jpeg'" />
+								<img class="search-profile-img" src="/upload/${user.profile_image_url}" onerror="this.src='/images/person.png'" />
 								<div class="search-profile">
 									<div class="search-profile-item">
 										<h5 class="pointer" onclick="location.href='/user/${user.id}'" align="left">${user.name}</h5>

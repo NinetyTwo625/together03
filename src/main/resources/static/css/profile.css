@@ -7,7 +7,6 @@
   src: url(../fonts/billabong.ttf);
 }
 
-
 .profileContainer {
   display: flex;
   justify-content: space-between;
@@ -65,7 +64,7 @@
   padding: 5px 9px;
   border: 1px solid rgba(var(--ca6, 219, 219, 219), 1);
   border-radius: 4px;
-  color: #262626;
+  color: #FF8C00;
   font-weight: bold;
   background: transparent;
 }
@@ -302,7 +301,7 @@
 }
 .modal-image .modal button:nth-child(2) {
   font-weight: 600;
-  color: #0095f6;
+  color: #FFA500;
 }
 .modal-image .modal button:not(:last-child) {
   border-bottom: 1px solid #dbdbdb;
@@ -389,7 +388,7 @@
   background: transparent;
 }
 .cta.blue {
-  background: #0095f6 !important;
+  background: #FF8C00 !important;
   color: #fff !important;
 }
 

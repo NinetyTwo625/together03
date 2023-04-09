@@ -13,7 +13,7 @@
 			<!--프로필셋팅 아이디영역-->
 			<div class="content-item__01">
 				<div class="item__img">
-					<img src="#" onerror="this.src='/images/person.jpeg'" />
+					<img src="#" onerror="this.src='/images/person.png'" />
 				</div>
 				<div class="item__username">
 					<h2>${principal.user.username}</h2>
@@ -84,14 +84,14 @@
 					</div>
 				</div>
 
-				<!--제출버튼-->
+				<!--확인버튼-->
 				<div class="content-item__11">
 					<div class="item__title"></div>
 					<div class="item__input">
-						<button>제출</button>
+						<button>확인</button>
 					</div>
 				</div>
-				<!--제출버튼end-->
+				<!--확인버튼end-->
 
 			</form>
 			<!--프로필수정 form end-->

@@ -32,7 +32,7 @@ public class Image {
     @ManyToOne
     private User user;
 
-    @OrderBy("id DESC")
+    @OrderBy("id asc")
     @JsonIgnoreProperties({"image"})
     @OneToMany(mappedBy = "image")
     private List<Comment> comments;
