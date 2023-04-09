@@ -3,63 +3,83 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <sec:authorize access="isAuthenticated()">
-   <sec:authentication property="principal" var="principal"/>
+	<sec:authentication property="principal" var="principal"/>
 </sec:authorize>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Together</title>
+<title>Photogram</title>
 
-   <!-- 제이쿼리 -->
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<!-- 제이쿼리 -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-   <!-- Style -->
-   <link rel="stylesheet" href="/css/style.css">
-   <link rel="stylesheet" href="/css/story.css">
-   <link rel="stylesheet" href="/css/popular.css">
-   <link rel="stylesheet" href="/css/profile.css">
-   <link rel="stylesheet" href="/css/upload.css">
-   <link rel="stylesheet" href="/css/update.css">
-   <link rel="shortcut icon" href="/images/insta.svg">
+	<!-- Style -->
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/story.css">
+	<link rel="stylesheet" href="/css/popular.css">
+	<link rel="stylesheet" href="/css/profile.css">
+	<link rel="stylesheet" href="/css/upload.css">
+	<link rel="stylesheet" href="/css/update.css">
+	<link rel="stylesheet" href="/css/search.css">
+	<link rel="shortcut icon" href="/images/insta.svg">
 
-   <!-- Fontawesome -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
-   <!-- Fonts -->
-   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+	<!-- Fontawesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+
+	<!-- Fonts -->
+	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 
-   <!-- principalId 담아두는 곳 -->
-   <input type="hidden" id="principalId" value="${principal.user.id}" />
+	<input type="hidden" id="principalId" value="${principal.user.id}" />
 
-   <header class="header">
-      <div class="container">
-         <a href="/" class="logo">
-            <img src="/images/logo.png" alt="">
-         </a>
-         <a href="/" class="logo2">
-            <img src="/images/logo2.png" alt="">
-         </a>
+	<header class="header">
+		<div class="container">
+			<a href="/" class="logo">
+				<img src="/images/logo.jpg" alt="">
+			</a>
+			<form id="searchForm" action="/search" method="GET">
+				<input type="text" id="search" name="keyword" placeholder="검색">
+				<div class="relative-tab">
+					<ul class="relative-tabnav">
+						<li><a href="#account">계정</a></li>
+						<li><a href="#tag">태그</a></li>
+					</ul>
+					<div class="relative-tabcontent">
+						<div id="account">
+							<div class="relative-keyword" id="relative-keyword-account"></div>
+						</div>
+						<div id="tag">
+							<div class="relative-keyword" id="relative-keyword-tag"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<nav class="navi">
+				<ul class="navi-list">
+					<li class="navi-item"><a href="/">
+							<i class="fas fa-home"></i>
+						</a></li>
+					<li class="navi-item"><a href="/image/popular">
+							<i class="far fa-compass"></i>
+						</a></li>
+					<li class="navi-item"><a href="/user/${principal.user.id}">
+							<i class="far fa-user"></i>
+						</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
 
-         <nav class="navi">
-            <ul class="navi-list">
-               <li class="navi-item"><a href="/">
-                     <i class="fas fa-home"></i>
-                  </a></li>
-               <li class="navi-item"><a href="/image/popular">
-                     <i class="far fa-compass"></i>
-                  </a></li>
-               <li class="navi-item"><a href="/image/chat">
-                     <i class="fas fa-smile"></i>
-                  </a></li>
-               <li class="navi-item"><a href="/user/${principal.user.id}">
-                     <i class="far fa-user"></i>
-                  </a></li>
-            </ul>
-         </nav>
-      </div>
-   </header>
+<script src="/js/profile.js"></script>
+<script src="/js/header.js"></script>

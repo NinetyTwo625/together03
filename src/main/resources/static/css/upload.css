@@ -70,9 +70,9 @@
 
 /*업로드 이미지 박스*/
 .upload .upload-form .upload-img {
-  width: 400px;
-  height: 300px;
-  margin-bottom: 5px;
+  width: 340px;
+  height: 340px;
+  margin-bottom: 15px;
 }
 
 /*업로드 이미지*/
@@ -89,22 +89,15 @@
 }
 
 /*이미지에 대한 설명인풋 + 버튼*/
-.upload .upload-form .upload-form-detail input,
-.upload .upload-form .upload-form-detail button {
-  width: 340px;
-}
 .upload .upload-form .upload-form-detail input {
   text-indent: 10px;
+  width: 340px;
   height: 45px;
   margin-bottom: 5px;
   border: 1px solid #ddd;
 }
 .upload .upload-form .upload-form-detail input::placeholder {
-  color: #222;
-}
-.upload .upload-form .upload-form-detail button {
-  height: 40px;
-  margin: 5px 0 10px 0;
+  color: gray;
 }
 .upload .upload-bottom {
   text-align: center;
@@ -113,5 +106,46 @@
   display: block;
   padding: 15px 0;
   border-top: 1px solid #dbdbdb;
-  color: #FF8C00;
+  color: #0095f6;
+}
+
+/* 이미지 해시태그 추가 */
+.upload-form-hashtag {
+	display: flex;
+	width: 340px;
+}
+.upload-form-hashtag button {
+	width: 60px;
+	height: 45px;
+	padding: 0px;
+	margin: 0 0 0 3px;
+}
+
+/* 이미지 업로드 버튼 */
+.upload-form-detail > button {
+	width: 340px;
+	margin: auto;
+	margin-top: 30px;
+	display: block;
+}
+
+/* 해시태그 리스트 */
+.hashtagList {
+	width: 340px;
+	text-align: center;
+}
+.hashtag {
+	height: 27.5px;
+	border-radius: 5px;
+	border: 1px solid #dbdbdb;
+	font-size: 13px;
+	padding: 5px;
+	margin: 2px;
+	display: inline-block;
+	color: gray;
+}
+.hashtag button {
+	border: none;
+	background: white;
+	color: gray;
 }

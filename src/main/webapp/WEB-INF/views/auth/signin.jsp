@@ -46,7 +46,22 @@
                                 <span>Facebook으로 로그인</span>
                             </button>
                         </div>
+
+                        <div class="login__google">
+                            <button onclick="javascript:location.href='/oauth2/authorization/google'">
+                                <i class="fab fa-google "></i>
+                                <span>google 계정으로 로그인</span>
+                            </button>
+                        </div>
+
                         <!-- Oauth 소셜로그인end -->
+
+                        <div align="center">
+                        	<c:if test="${error}">
+                        		<p class="exception">${exception}</p>
+                        	</c:if>
+                        </div>
+
                     </div>
 
                     <!--계정이 없으신가요?-->
