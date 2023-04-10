@@ -37,7 +37,7 @@ input.addEventListener("keyup", async (e) => {
 				`<div class="flex">
 					<div class="relative-keyword-image">
 						<img class="profile-image" src="/upload/${user.profile_image_url}"
-							onerror="this.src='/images/person.jpeg'" />
+							onerror="this.src='/images/person.png'" />
 					</div>
 					<div class="relative-keyword-name">${user.name}</div>
 				</div>`

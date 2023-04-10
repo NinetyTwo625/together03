@@ -18,7 +18,7 @@
 					<tr>
 						<td>
 							<img class="profile-image" src="/upload/${principal.user.profile_image_url}"
-								onerror="this.src='/images/person.jpeg'" />
+								onerror="this.src='/images/person.png'" />
 						</td>
 						<td>
 							<div class="story-status-name pointer" onclick="location.href='/user/${principal.user.id}'">
@@ -37,7 +37,7 @@
 							<tr>
 								<td>
 									<img class="profile-image" src="/upload/${subUser.profile_image_url}"
-										onerror="this.src='/images/person.jpeg'" />
+										onerror="this.src='/images/person.png'" />
 								</td>
 								<td>
 									<div class="story-status-name pointer" onclick="location.href='/user/${subUser.id}'">
@@ -58,7 +58,7 @@
 				<tr>
 					<td width="30">
 						<img class="profile-image" src="/upload/${subUser.profile_image_url}"
-							onerror="this.src='/images/person.jpeg'" />
+							onerror="this.src='/images/person.png'" />
 					</td>
 					<td>
 						<div>코스</div>
