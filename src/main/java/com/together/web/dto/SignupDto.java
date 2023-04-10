@@ -10,8 +10,8 @@ import javax.validation.constraints.Size;
 @Data
 public class SignupDto {
 
+    @Size(min = 2, max = 20)
     @NotBlank(message = "아이디는 필수 입력 값입니다.")
-    @Pattern(regexp = "^[A-Za-z]{1}[A-Za-z0-9]{5,19}$", message = "아이디는 6~20자 영문 소문자, 숫자를 사용하세요.")
     private String username;
 
     @NotBlank(message = "비밀번호는 필수 입력 값입니다.")
